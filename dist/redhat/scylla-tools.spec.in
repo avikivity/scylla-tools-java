@@ -34,7 +34,11 @@ Core files for scylla tools.
 
 
 %build
-env LANG=en_US.UTF-8 JAVA_HOME=/usr/lib/jvm/java ant jar
+proxy_params=()
+if [[ -n "$http_proxy" ]]; then
+    proxy_params=(-Dhttp.proxyHost="${http_proxy%:*") -Dhttp.proxyPort="${http_proxy#*:}")
+fi
+env LANG=en_US.UTF-8 JAVA_HOME=/usr/lib/jvm/java ant "${proxy_params[@]}" jar
 
 %install
 rm -rf $RPM_BUILD_ROOT

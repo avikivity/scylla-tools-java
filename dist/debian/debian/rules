@@ -3,7 +3,7 @@
 # Uncomment to enable verbose mode.
 #export DH_VERBOSE=1
 
-ANT = /usr/bin/ant
+ANT = /usr/bin/ant $(if $(http_proxy), -Dhttp.proxyHost=$(patsubst :%,,$(http_proxy)) -Dhttp.proxyPort=$(patsubst %:,,$(http_proxy)))
 VERSION = $(shell dpkg-parsechangelog | sed -ne 's/^Version: \([^-|~|+]*\).*/\1/p')
 
 test:
